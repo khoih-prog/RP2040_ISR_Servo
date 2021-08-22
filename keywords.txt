@@ -1,0 +1,38 @@
+#######################################
+# Data types (KEYWORD1)
+#######################################
+
+RP2040_ISR_Servo KEYWORD1
+RP2040_ISR_Servos  KEYWORD1
+
+ServoImpl KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+setFrequency	KEYWORD2
+attachInterruptInterval	KEYWORD2
+detachInterrupt	KEYWORD2
+reattachInterrupt	KEYWORD2
+useTimer  KEYWORD2
+init  KEYWORD2
+setupServo  KEYWORD2
+setPosition  KEYWORD2
+getPosition  KEYWORD2
+setPulseWidth  KEYWORD2
+getPulseWidth  KEYWORD2
+deleteServo  KEYWORD2
+isEnabled KEYWORD2
+enable  KEYWORD2
+disable KEYWORD2
+enableAll KEYWORD2
+disableAll  KEYWORD2
+toggle  KEYWORD2
+getNumServos  KEYWORD2
+getNumAvailableServos KEYWORD2
+
+
+#######################################
+# Literals (LITERAL1)
+#######################################
