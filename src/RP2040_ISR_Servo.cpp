@@ -16,11 +16,12 @@
   Based on BlynkTimer.h
   Author: Volodymyr Shymanskyy
 
-  Version: 1.0.0
+  Version: 1.0.1
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0   K Hoang      21/08/2021 Initial coding for RP2040 boards using ArduinoCore-mbed or arduino-pico core
+  1.0.1   K Hoang      22/10/2021 Fix platform in library.json for PIO
  *****************************************************************************************************************************/
 
 #include "RP2040_ISR_Servo.h"

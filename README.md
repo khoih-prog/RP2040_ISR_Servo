@@ -15,8 +15,7 @@
   * [Features](#features)
   * [Important Notes about using ISR](#important-notes-about-using-isr)
   * [Currently supported Boards](#currently-supported-boards)
-* [Changelog](#changelog)
-  * [Releases v1.0.0](#releases-v100)
+* [Changelog](changelog.md)
 * [Prerequisites](#prerequisites)
 * [Installation](#installation)
   * [Use Arduino Library Manager](#use-arduino-library-manager)
@@ -35,7 +34,6 @@
   * [3. RP2040_MultipleServos on RaspberryPi Pico](#3-rp2040_multipleservos-on-raspberrypi-pico)
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
-* [Releases](#releases)
 * [Issues](#issues)
 * [TO DO](#to-do)
 * [DONE](#done)
@@ -88,22 +86,11 @@ This library enables you to use `1 Hardware Timer` on an RP2040-based board to c
 ---
 ---
 
-## Changelog
-
-### Releases v1.0.0
-
-1. Basic 16 ISR-based servo controllers using 1 hardware timer for RP2040-based board
-2. Support to both [**Arduino-mbed RP2040** core](https://github.com/arduino/ArduinoCore-mbed) and [**Earle Philhower's arduino-pico core**](https://github.com/earlephilhower/arduino-pico)
-
-
----
----
-
 ## Prerequisites
 
-1. [`Arduino IDE 1.8.15+`](https://www.arduino.cc/en/Main/Software)
-2. [`Arduino mbed_rp2040 core 2.4.1+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino (Use Arduino Board Manager) RP2040-based boards, such as **Arduino Nano RP2040 Connect, RASPBERRY_PI_PICO, etc.**. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
-3. [`Earle Philhower's arduino-pico core v1.9.4+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
+1. [`Arduino IDE 1.8.16+`](https://www.arduino.cc/en/Main/Software)
+2. [`Arduino mbed_rp2040 core 2.5.2+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino (Use Arduino Board Manager) RP2040-based boards, such as **Arduino Nano RP2040 Connect, RASPBERRY_PI_PICO, etc.**. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
+3. [`Earle Philhower's arduino-pico core v1.9.5+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
 
 ---
 
@@ -441,7 +428,7 @@ void loop()
 
 ```
 Starting RP2040_MultipleRandomServos on Mbed RaspberryPi Pico
-Mbed RP2040_ISR_Servo v1.0.0
+Mbed RP2040_ISR_Servo v1.0.1
 Setup OK Servo index = 0
 Setup OK Servo index = 1
 Setup OK Servo index = 2
@@ -485,7 +472,7 @@ Servos idx = 5, act. pos. (deg) = 800, pulseWidth (us) = 800
 
 ```
 Starting RP2040_MultipleRandomServos on RaspberryPi Pico
-RP2040_ISR_Servo v1.0.0
+RP2040_ISR_Servo v1.0.1
 Setup OK Servo index = 0
 Setup OK Servo index = 1
 Setup OK Servo index = 2
@@ -530,7 +517,7 @@ Servos idx = 5, act. pos. (deg) = 800, pulseWidth (us) = 800
 ```
 
 Starting RP2040_MultipleServos on RASPBERRY_PI_PICO
-RP2040_ISR_Servo v1.0.0
+RP2040_ISR_Servo v1.0.1
 Setup OK Servo index = 0
 Setup OK Servo index = 1
 Setup OK Servo index = 2
@@ -561,16 +548,6 @@ If you get compilation errors, more often than not, you may need to install a ne
 
 Sometimes, the library will only work if you update the board core to the latest version because I am using newly added functions.
 
-
----
----
-
-## Releases
-
-### Releases v1.0.0
-
-1. Basic 16 ISR-based servo controllers using 1 hardware timer for RP2040-based board
-2. Support to both [**Arduino-mbed RP2040** core](https://github.com/arduino/ArduinoCore-mbed) and [**Earle Philhower's arduino-pico core**](https://github.com/earlephilhower/arduino-pico)
 
 ---
 ---
