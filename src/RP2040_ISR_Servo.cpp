@@ -258,7 +258,7 @@ bool RP2040_ISR_Servo::setPulseWidth(unsigned servoIndex, unsigned int pulseWidt
     else if (pulseWidth > _maxUs)
       pulseWidth = _maxUs;
 
-    servo[servoIndex].position  = map(pulseWidth, _minUs, _maxUs, 0, 180);
+    //servo[servoIndex].position  = map(pulseWidth, _minUs, _maxUs, 0, 180);
     
     writeMicroseconds(servoIndex, servo[servoIndex].position);
 
