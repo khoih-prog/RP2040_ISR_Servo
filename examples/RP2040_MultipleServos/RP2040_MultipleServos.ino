@@ -8,13 +8,6 @@
 
   Built by Khoi Hoang https://github.com/khoih-prog/RP2040_ISR_Servo
   Licensed under MIT license
-
-  Based on SimpleTimer - A timer library for Arduino.
-  Author: mromani@ottotecnica.com
-  Copyright (c) 2010 OTTOTECNICA Italy
-
-  Based on BlynkTimer.h
-  Author: Volodymyr Shymanskyy
 *****************************************************************************************************************************/
 
 /****************************************************************************************************************************
@@ -66,9 +59,9 @@
   #error This code is intended to run on the mbed / non-mbed RP2040 platform! Please check your Tools->Board setting.
 #endif
 
-#define TIMER_INTERRUPT_DEBUG       4
 #define ISR_SERVO_DEBUG             4
 
+// Can be included as many times as necessary, without `Multiple Definitions` Linker Error
 #include "RP2040_ISR_Servo.h"
 
 // Published values for SG90 servos; adjust if needed
