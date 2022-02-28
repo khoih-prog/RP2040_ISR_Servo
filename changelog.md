@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+  * [Releases v1.1.0](#releases-v110)
   * [Releases v1.0.1](#releases-v101)
   * [Releases v1.0.0](#releases-v100)
  
@@ -19,6 +20,13 @@
 ---
 
 ## Changelog
+
+### Releases v1.1.0
+
+1. Convert to `h-only` style
+2. Add example [multiFileProject](examples/multiFileProject) to demo for multiple-file project
+3. Fix `setPulseWidth()` bug. Check [setPulseWidth - removed wrong map #2](https://github.com/khoih-prog/RP2040_ISR_Servo/pull/2)
+4. Optimize code by using passing by `reference` instead of by `value`
 
 ### Releases v1.0.1
 

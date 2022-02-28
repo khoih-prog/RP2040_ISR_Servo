@@ -13,6 +13,7 @@
 
 ## Table of Contents
 
+* [Important Change from v1.1.0](#Important-Change-from-v110)
 * [Why do we need this RP2040_ISR_Servo library](#why-do-we-need-this-rp2040_isr_servo-library)
   * [Features](#features)
   * [Important Notes about using ISR](#important-notes-about-using-isr)
@@ -23,11 +24,13 @@
   * [Use Arduino Library Manager](#use-arduino-library-manager)
   * [Manual Install](#manual-install)
   * [VS Code & PlatformIO](#vs-code--platformio)
+* [HOWTO Fix `Multiple Definitions` Linker Error](#howto-fix-multiple-definitions-linker-error) 
 * [What special in this RP2040_ISR_Servo library](#what-special-in-this-RP2040_ISR_Servo-library)
 * [HOWTO Usage](#howto-usage)
 * [Examples](#examples)
   * [ 1. RP2040_MultipleRandomServos](examples/RP2040_MultipleRandomServos)
   * [ 2. RP2040_MultipleServos](examples/RP2040_MultipleServos)
+  * [ 3. multiFileProject](examples/multiFileProject) **New**
 * [Example RP2040_MultipleServos](#example-rp2040_multipleservos)
   * [1. File RP2040_MultipleServos.ino](#1-file-rp2040_multipleservosino)
 * [Debug Terminal Output Samples](#debug-terminal-output-samples)
@@ -43,6 +46,14 @@
 * [Contributing](#contributing)
 * [License](#license)
 * [Copyright](#copyright)
+
+
+---
+---
+
+### Important Change from v1.1.0
+
+Please have a look at [HOWTO Fix `Multiple Definitions` Linker Error](#howto-fix-multiple-definitions-linker-error)
 
 
 ---
@@ -92,7 +103,7 @@ This library enables you to use `1 Hardware Timer` on an RP2040-based board to c
 
 1. [`Arduino IDE 1.8.19+` for Arduino](https://github.com/arduino/Arduino). [![GitHub release](https://img.shields.io/github/release/arduino/Arduino.svg)](https://github.com/arduino/Arduino/releases/latest)
 2. [`Arduino mbed_rp2040 core 2.7.2+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino (Use Arduino Board Manager) RP2040-based boards, such as **Arduino Nano RP2040 Connect, RASPBERRY_PI_PICO, etc.**. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
-3. [`Earle Philhower's arduino-pico core v1.10.0+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
+3. [`Earle Philhower's arduino-pico core v1.12.0+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
 
 ---
 
@@ -116,8 +127,34 @@ Another way to install is to:
 
 1. Install [VS Code](https://code.visualstudio.com/)
 2. Install [PlatformIO](https://platformio.org/platformio-ide)
-3. Install [**RP2040_ISR_Servo** library](https://platformio.org/lib/show/12713/RP2040_ISR_Servo) by using [Library Manager](https://platformio.org/lib/show/12713/RP2040_ISR_Servo/installation). Search for **RP2040_ISR_Servo** in [Platform.io Author's Libraries](https://platformio.org/lib/search?query=author:%22Khoi%20Hoang%22)
+3. Install [**RP2040_ISR_Servo** library](https://registry.platformio.org/libraries/khoih-prog/RP2040_ISR_Servo) by using [Library Manager](https://registry.platformio.org/libraries/khoih-prog/RP2040_ISR_Servo/installation). Search for **RP2040_ISR_Servo** in [Platform.io Author's Libraries](https://platformio.org/lib/search?query=author:%22Khoi%20Hoang%22)
 4. Please visit documentation for the other options and examples at [Project Configuration File](https://docs.platformio.org/page/projectconf.html)
+
+---
+---
+
+### HOWTO Fix `Multiple Definitions` Linker Error
+
+The current library implementation, using `xyz-Impl.h` instead of standard `xyz.cpp`, possibly creates certain `Multiple Definitions` Linker error in certain use cases.
+
+You can include this `.hpp` file
+
+```
+// Can be included as many times as necessary, without `Multiple Definitions` Linker Error
+#include "RP2040_ISR_Servo.hpp"     //https://github.com/khoih-prog/RP2040_ISR_Servo
+```
+
+in many files. But be sure to use the following `.h` file **in just 1 `.h`, `.cpp` or `.ino` file**, which must **not be included in any other file**, to avoid `Multiple Definitions` Linker Error
+
+```
+// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
+#include "RP2040_ISR_Servo.h"           //https://github.com/khoih-prog/RP2040_ISR_Servo
+```
+
+Check the new [**multiFileProject** example](examples/multiFileProject) for a `HOWTO` demo.
+
+Have a look at the discussion in [Different behaviour using the src_cpp or src_h lib #80](https://github.com/khoih-prog/ESPAsync_WiFiManager/discussions/80)
+
 
 ---
 ---
@@ -304,7 +341,8 @@ void loop()
 ### Examples: 
 
  1. [RP2040_MultipleRandomServos](examples/RP2040_MultipleRandomServos) 
- 2. [RP2040_MultipleServos](examples/RP2040_MultipleServos) 
+ 2. [RP2040_MultipleServos](examples/RP2040_MultipleServos)
+ 3. [multiFileProject](examples/multiFileProject) **New**
  
 ---
 
@@ -313,113 +351,8 @@ void loop()
 
 #### 1. File [RP2040_MultipleServos.ino](examples/RP2040_MultipleServos/RP2040_MultipleServos.ino)
 
-```cpp
-#if ( defined(ARDUINO_ARCH_RP2040) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || \
-      defined(ARDUINO_GENERIC_RP2040) ) && !defined(ARDUINO_ARCH_MBED)
-  #if !defined(RP2040_ISR_SERVO_USING_MBED)    
-    #define RP2040_ISR_SERVO_USING_MBED     false
-  #endif  
-  
-#elif ( defined(ARDUINO_NANO_RP2040_CONNECT) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || \
-      defined(ARDUINO_GENERIC_RP2040) ) && defined(ARDUINO_ARCH_MBED)
-      
-  #if !defined(RP2040_ISR_SERVO_USING_MBED)    
-    #define RP2040_ISR_SERVO_USING_MBED     true
-  #endif  
-  
-#else      
-  #error This code is intended to run on the mbed / non-mbed RP2040 platform! Please check your Tools->Board setting.
-#endif
+https://github.com/khoih-prog/RP2040_ISR_Servo/blob/39e160439b9b4e7c5238202379bd042121784f65/examples/RP2040_MultipleServos/RP2040_MultipleServos.ino#L45-L149
 
-#define TIMER_INTERRUPT_DEBUG       4
-#define ISR_SERVO_DEBUG             4
-
-#include "RP2040_ISR_Servo.h"
-
-// Published values for SG90 servos; adjust if needed
-#define MIN_MICROS        800
-#define MAX_MICROS        2450
-
-#define SERVO_PIN_1       16
-#define SERVO_PIN_2       17
-#define SERVO_PIN_3       18
-#define SERVO_PIN_4       19
-#define SERVO_PIN_5       20
-#define SERVO_PIN_6       21
-
-typedef struct
-{
-  int     servoIndex;
-  uint8_t servoPin;
-} ISR_servo_t;
-
-
-#define NUM_SERVOS            6
-
-ISR_servo_t ISR_servo[NUM_SERVOS] =
-{
-  { -1, SERVO_PIN_1 }, { -1, SERVO_PIN_2 }, { -1, SERVO_PIN_3 }, { -1, SERVO_PIN_4 }, { -1, SERVO_PIN_5 }, { -1, SERVO_PIN_6 }
-};
-
-void setup()
-{
-  for (int index = 0; index < NUM_SERVOS; index++)
-  {
-    pinMode(ISR_servo[index].servoPin, OUTPUT);
-    digitalWrite(ISR_servo[index].servoPin, LOW);
-  }
-  
-  Serial.begin(115200);
-  while (!Serial);
-
-  delay(200);
-
-#if defined(ARDUINO_ARCH_MBED)
-  Serial.print(F("\nStarting RP2040_MultipleServos on Mbed "));
-#else
-  Serial.print(F("\nStarting RP2040_MultipleServos on "));
-#endif
-
-  Serial.println(BOARD_NAME);
-  Serial.println(RP2040_ISR_SERVO_VERSION);
-  
-  for (int index = 0; index < NUM_SERVOS; index++)
-  {
-    ISR_servo[index].servoIndex = RP2040_ISR_Servos.setupServo(ISR_servo[index].servoPin, MIN_MICROS, MAX_MICROS);
-
-    if (ISR_servo[index].servoIndex != -1)
-    {
-      Serial.print(F("Setup OK Servo index = ")); Serial.println(ISR_servo[index].servoIndex);
-
-      RP2040_ISR_Servos.setPosition(ISR_servo[index].servoIndex, 0);
-    }
-    else
-    {
-      Serial.print(F("Setup Failed Servo index = ")); Serial.println(ISR_servo[index].servoIndex);
-    }
-  }
-}
-
-void loop()
-{
-  int position;      // position in degrees
-
-  for (position = 0; position <= 180; position += 10)
-  {
-    // goes from 0 degrees to 180 degrees
-    // in steps of 10 degree
-    for (int index = 0; index < NUM_SERVOS; index++)
-    {
-      RP2040_ISR_Servos.setPosition(ISR_servo[index].servoIndex, position);
-    }
-    
-    // waits 1s for the servo to reach the position
-    delay(1000);
-  }
-
-  delay(5000);
-}
-```
 ---
 ---
 
@@ -430,7 +363,7 @@ void loop()
 
 ```
 Starting RP2040_MultipleRandomServos on Mbed RaspberryPi Pico
-Mbed RP2040_ISR_Servo v1.0.1
+Mbed RP2040_ISR_Servo v1.1.0
 Setup OK Servo index = 0
 Setup OK Servo index = 1
 Setup OK Servo index = 2
@@ -474,7 +407,7 @@ Servos idx = 5, act. pos. (deg) = 800, pulseWidth (us) = 800
 
 ```
 Starting RP2040_MultipleRandomServos on RaspberryPi Pico
-RP2040_ISR_Servo v1.0.1
+RP2040_ISR_Servo v1.1.0
 Setup OK Servo index = 0
 Setup OK Servo index = 1
 Setup OK Servo index = 2
@@ -519,7 +452,7 @@ Servos idx = 5, act. pos. (deg) = 800, pulseWidth (us) = 800
 ```
 
 Starting RP2040_MultipleServos on RASPBERRY_PI_PICO
-RP2040_ISR_Servo v1.0.1
+RP2040_ISR_Servo v1.1.0
 Setup OK Servo index = 0
 Setup OK Servo index = 1
 Setup OK Servo index = 2
@@ -573,6 +506,9 @@ Submit issues to: [RP2040_ISR_Servo issues](https://github.com/khoih-prog/RP2040
 2. Add functions `getPosition()` and `getPulseWidth()`
 3. Optimize the code
 4. Add complicated examples
+5. Convert to `h-only` style
+6. Add example [multiFileProject](examples/multiFileProject) to demo for multiple-file project
+7. Optimize code by using passing by `reference` instead of by `value
 
 ---
 ---
@@ -581,6 +517,13 @@ Submit issues to: [RP2040_ISR_Servo issues](https://github.com/khoih-prog/RP2040
 
 Many thanks for everyone for bug reporting, new feature suggesting, testing and contributing to the development of this library. Especially to these people who have directly or indirectly contributed to this [RP2040_ISR_Servo library](https://github.com/khoih-prog/RP2040_ISR_Servo)
 
+1. Thanks to [Radek Voltr](https://github.com/RadekVoltr) for the PR [**setPulseWidth - removed wrong map** #2](https://github.com/khoih-prog/RP2040_ISR_Servo/pull/2), leading to new version v1.1.0
+
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/RadekVoltr"><img src="https://github.com/RadekVoltr.png" width="100px;" alt="RadekVoltr"/><br /><sub><b>Radek Voltr</b></sub></a><br /></td>
+  </tr> 
+</table>
 
 ---
 

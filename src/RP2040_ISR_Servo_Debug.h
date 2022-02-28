@@ -9,19 +9,13 @@
   Built by Khoi Hoang https://github.com/khoih-prog/RP2040_ISR_Servo
   Licensed under MIT license
 
-  Based on SimpleTimer - A timer library for Arduino.
-  Author: mromani@ottotecnica.com
-  Copyright (c) 2010 OTTOTECNICA Italy
-
-  Based on BlynkTimer.h
-  Author: Volodymyr Shymanskyy
-
-  Version: 1.0.1
+  Version: 1.1.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0   K Hoang      21/08/2021 Initial coding for RP2040 boards using ArduinoCore-mbed or arduino-pico core
   1.0.1   K Hoang      22/10/2021 Fix platform in library.json for PIO
+  1.1.0   K Hoang      27/02/2022 Fix setPulseWidth() bug. Convert to h-only style
  *****************************************************************************************************************************/
 
 #pragma once
@@ -30,10 +24,6 @@
 #define RP2040_ISR_Servo_Debug_h
 
 //////////////////////////////////////////
-
-#ifndef TIMER_INTERRUPT_DEBUG
-  #define TIMER_INTERRUPT_DEBUG         1
-#endif
 
 #ifndef ISR_SERVO_DEBUG
   #define ISR_SERVO_DEBUG               1

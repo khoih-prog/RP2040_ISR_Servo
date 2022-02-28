@@ -1,6 +1,6 @@
 {
   "name": "RP2040_ISR_Servo",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "keywords": "timing, device, control, timer, interrupt, isr, isr-based, hardware-timer, mission-critical, accuracy, precise, non-blocking, mbed, rpi-pico, rp2040, nano-rp2040-connect, servo",
   "description": "This library enables you to use 1 Hardware Timer on RP2040-based board, such as Nano_RP2040_Connect, RASPBERRY_PI_PICO, to control up to 16 or more servo motors.",
   "authors":
@@ -21,9 +21,10 @@
       "extras",
       "tests"
     ]
-  },  
+  },
+  "license": "MIT",
   "frameworks": "*",
   "platforms": ["raspberrypi"],
   "examples": "examples/*/*/*.ino",
-  "license": "MIT"
+  "headers": ["RP2040_ISR_Servo.h","RP2040_ISR_Servo.hpp"]
 }
