@@ -103,8 +103,8 @@ This library enables you to use `1 Hardware Timer` on an RP2040-based board to c
 ## Prerequisites
 
 1. [`Arduino IDE 1.8.19+` for Arduino](https://github.com/arduino/Arduino). [![GitHub release](https://img.shields.io/github/release/arduino/Arduino.svg)](https://github.com/arduino/Arduino/releases/latest)
-2. [`Arduino mbed_rp2040 core 2.7.2+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino (Use Arduino Board Manager) RP2040-based boards, such as **Arduino Nano RP2040 Connect, RASPBERRY_PI_PICO, etc.**. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
-3. [`Earle Philhower's arduino-pico core v1.12.0+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
+2. [`Arduino mbed_rp2040 core 2.8.0+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino (Use Arduino Board Manager) RP2040-based boards, such as **Arduino Nano RP2040 Connect, RASPBERRY_PI_PICO, etc.**. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
+3. [`Earle Philhower's arduino-pico core v1.13.0+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
 
 ---
 
@@ -364,7 +364,7 @@ https://github.com/khoih-prog/RP2040_ISR_Servo/blob/39e160439b9b4e7c5238202379bd
 
 ```
 Starting RP2040_MultipleRandomServos on Mbed RaspberryPi Pico
-Mbed RP2040_ISR_Servo v1.1.0
+Mbed RP2040_ISR_Servo v1.1.1
 Setup OK Servo index = 0
 Setup OK Servo index = 1
 Setup OK Servo index = 2
@@ -408,7 +408,7 @@ Servos idx = 5, act. pos. (deg) = 800, pulseWidth (us) = 800
 
 ```
 Starting RP2040_MultipleRandomServos on RaspberryPi Pico
-RP2040_ISR_Servo v1.1.0
+RP2040_ISR_Servo v1.1.1
 Setup OK Servo index = 0
 Setup OK Servo index = 1
 Setup OK Servo index = 2
@@ -453,7 +453,7 @@ Servos idx = 5, act. pos. (deg) = 800, pulseWidth (us) = 800
 ```
 
 Starting RP2040_MultipleServos on RASPBERRY_PI_PICO
-RP2040_ISR_Servo v1.1.0
+RP2040_ISR_Servo v1.1.1
 Setup OK Servo index = 0
 Setup OK Servo index = 1
 Setup OK Servo index = 2
@@ -536,6 +536,7 @@ If you want to contribute to this project:
 - Create issues and pull requests
 - Tell other people about this library
 
+---
 ---
 
 ### License
