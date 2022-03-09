@@ -30,8 +30,8 @@
   #error This code is intended to run on the mbed / non-mbed RP2040 platform! Please check your Tools->Board setting.
 #endif
 
-#define RP2040_ISR_SERVO_VERSION_MIN_TARGET      "RP2040_ISR_Servo v1.1.0"
-#define RP2040_ISR_SERVO_VERSION_MIN             1001000
+#define RP2040_ISR_SERVO_VERSION_MIN_TARGET      "RP2040_ISR_Servo v1.1.1"
+#define RP2040_ISR_SERVO_VERSION_MIN             1001001
 
 #include "multiFileProject.h"
 
