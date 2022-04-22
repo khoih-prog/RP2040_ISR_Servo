@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+  * [Releases v1.1.2](#releases-v112)
   * [Releases v1.1.1](#releases-v111)
   * [Releases v1.1.0](#releases-v111)
   * [Releases v1.0.1](#releases-v101)
@@ -21,6 +22,11 @@
 ---
 
 ## Changelog
+
+### Releases v1.1.2
+
+1. Permit using servos with different pulse ranges simultaneously. Check [Fix Bug #5 : Permit using servos with different pulse ranges simultaneously #4](https://github.com/khoih-prog/RP2040_ISR_Servo/pull/4)
+
 
 ### Releases v1.1.1
 

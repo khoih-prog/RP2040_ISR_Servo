@@ -9,7 +9,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/RP2040_ISR_Servo
   Licensed under MIT license
 
-  Version: 1.1.1
+  Version: 1.1.2
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -17,6 +17,7 @@
   1.0.1   K Hoang      22/10/2021 Fix platform in library.json for PIO
   1.1.0   K Hoang      27/02/2022 Fix setPulseWidth() bug. Convert to h-only style
   1.1.1   K Hoang      08/03/2022 Delete redundant `.cpp` file causing compile error
+  1.1.2   K Hoang      08/03/2022 Permit using servos with different pulse ranges simultaneously
  *****************************************************************************************************************************/
 
 #pragma once

@@ -103,8 +103,8 @@ This library enables you to use `1 Hardware Timer` on an RP2040-based board to c
 ## Prerequisites
 
 1. [`Arduino IDE 1.8.19+` for Arduino](https://github.com/arduino/Arduino). [![GitHub release](https://img.shields.io/github/release/arduino/Arduino.svg)](https://github.com/arduino/Arduino/releases/latest)
-2. [`Arduino mbed_rp2040 core 2.8.0+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino (Use Arduino Board Manager) RP2040-based boards, such as **Arduino Nano RP2040 Connect, RASPBERRY_PI_PICO, etc.**. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
-3. [`Earle Philhower's arduino-pico core v1.13.0+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
+2. [`Arduino mbed_rp2040 core 3.0.1+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino (Use Arduino Board Manager) RP2040-based boards, such as **Arduino Nano RP2040 Connect, RASPBERRY_PI_PICO, etc.**. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
+3. [`Earle Philhower's arduino-pico core v1.13.2+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
 
 ---
 
@@ -364,7 +364,7 @@ https://github.com/khoih-prog/RP2040_ISR_Servo/blob/39e160439b9b4e7c5238202379bd
 
 ```
 Starting RP2040_MultipleRandomServos on Mbed RaspberryPi Pico
-Mbed RP2040_ISR_Servo v1.1.1
+Mbed RP2040_ISR_Servo v1.1.2
 Setup OK Servo index = 0
 Setup OK Servo index = 1
 Setup OK Servo index = 2
@@ -408,7 +408,7 @@ Servos idx = 5, act. pos. (deg) = 800, pulseWidth (us) = 800
 
 ```
 Starting RP2040_MultipleRandomServos on RaspberryPi Pico
-RP2040_ISR_Servo v1.1.1
+RP2040_ISR_Servo v1.1.2
 Setup OK Servo index = 0
 Setup OK Servo index = 1
 Setup OK Servo index = 2
@@ -453,7 +453,7 @@ Servos idx = 5, act. pos. (deg) = 800, pulseWidth (us) = 800
 ```
 
 Starting RP2040_MultipleServos on RASPBERRY_PI_PICO
-RP2040_ISR_Servo v1.1.1
+RP2040_ISR_Servo v1.1.2
 Setup OK Servo index = 0
 Setup OK Servo index = 1
 Setup OK Servo index = 2
@@ -510,6 +510,8 @@ Submit issues to: [RP2040_ISR_Servo issues](https://github.com/khoih-prog/RP2040
 5. Convert to `h-only` style
 6. Add example [multiFileProject](examples/multiFileProject) to demo for multiple-file project
 7. Optimize code by using passing by `reference` instead of by `value
+8. Permit using servos with different pulse ranges simultaneously
+
 
 ---
 ---
@@ -519,10 +521,12 @@ Submit issues to: [RP2040_ISR_Servo issues](https://github.com/khoih-prog/RP2040
 Many thanks for everyone for bug reporting, new feature suggesting, testing and contributing to the development of this library. Especially to these people who have directly or indirectly contributed to this [RP2040_ISR_Servo library](https://github.com/khoih-prog/RP2040_ISR_Servo)
 
 1. Thanks to [Radek Voltr](https://github.com/RadekVoltr) for the PR [**setPulseWidth - removed wrong map** #2](https://github.com/khoih-prog/RP2040_ISR_Servo/pull/2), leading to new version v1.1.0
+2. Thanks to [Samt43](https://github.com/Samt43) for the PR [**Fix Bug #5 : Permit using servos with different pulse ranges simultaneously** #4](https://github.com/khoih-prog/RP2040_ISR_Servo/pull/4), leading to new version v1.1.2
 
 <table>
   <tr>
     <td align="center"><a href="https://github.com/RadekVoltr"><img src="https://github.com/RadekVoltr.png" width="100px;" alt="RadekVoltr"/><br /><sub><b>Radek Voltr</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/Samt43"><img src="https://github.com/Samt43.png" width="100px;" alt="Samt43"/><br /><sub><b>Samt43</b></sub></a><br /></td>
   </tr> 
 </table>
 
