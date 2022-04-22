@@ -158,7 +158,7 @@ class RP2040_ISR_Servo
     }
 
     // Bind servo to the timer and pin, return servoIndex
-    int8_t setupServo(const uint8_t& pin, const uint16_t& min = MIN_PULSE_WIDTH, const uint16_t& max = MAX_PULSE_WIDTH, uint16_t value = 0);
+    int8_t setupServo(const uint8_t& pin, const uint16_t& minPulseUs = MIN_PULSE_WIDTH, const uint16_t& maxPulseUs = MAX_PULSE_WIDTH, uint16_t value = 0);
     
     // if value is < MIN_PULSE_WIDTH its treated as an angle, otherwise as pulse width in microseconds
     void write(const uint8_t& servoIndex, uint16_t& value);
@@ -234,9 +234,6 @@ class RP2040_ISR_Servo
 
     // find the first available slot
     int8_t findFirstFreeSlot();
-    
-    uint16_t      _minUs;
-    uint16_t      _maxUs;
 
 #if defined(ARDUINO_ARCH_MBED)
 
@@ -245,7 +242,8 @@ class RP2040_ISR_Servo
       uint8_t       pin;                  // pin servo connected to
       int           position;             // In degrees
       bool          enabled;              // true if enabled
-      
+      uint16_t      minPulseUs;           // The minimum pulse width the servo can handle
+      uint16_t      maxPulseUs;           // The maximum pulse width the servo can handle
       ServoImpl*    servoImpl;
     } servo_t;
     
@@ -259,6 +257,8 @@ class RP2040_ISR_Servo
       int           pgmOffset;  // Where in the SM the code lives
       int           position;   // In degrees
       bool          enabled;    // true if enabled
+      uint16_t      minPulseUs; // The minimum pulse width the servo can handle
+      uint16_t      maxPulseUs; // The maximum pulse width the servo can handle
     } servo_t;
 
 #endif

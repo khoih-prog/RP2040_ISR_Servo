@@ -78,7 +78,7 @@ int8_t RP2040_ISR_Servo::findFirstFreeSlot()
 
 /////////////////////////////////////////////////////
 
-int8_t RP2040_ISR_Servo::setupServo(const uint8_t& pin, const uint16_t& minUs, const uint16_t& maxUs, uint16_t value)
+int8_t RP2040_ISR_Servo::setupServo(const uint8_t& pin, const uint16_t& minPulseUs, const uint16_t& maxPulseUs, uint16_t value)
 {
   int8_t servoIndex;
 
@@ -97,8 +97,8 @@ int8_t RP2040_ISR_Servo::setupServo(const uint8_t& pin, const uint16_t& minUs, c
     return -1;
 
   servo[servoIndex].pin       = pin;
-  _maxUs                      = maxUs;
-  _minUs                      = minUs;
+  servo[servoIndex].maxPulseUs = maxPulseUs;
+  servo[servoIndex].minPulseUs = minPulseUs;
   servo[servoIndex].position  = 0;
   servo[servoIndex].enabled   = true;
  
@@ -139,7 +139,7 @@ int8_t RP2040_ISR_Servo::setupServo(const uint8_t& pin, const uint16_t& minUs, c
 #endif  
 
   ISR_SERVO_LOGDEBUG1("Index =", servoIndex);
-  ISR_SERVO_LOGDEBUG3("min =", _minUs, ", max =", _maxUs);
+  ISR_SERVO_LOGDEBUG3("min =", servo[servoIndex].minPulseUs, ", max =", servo[servoIndex].maxPulseUs);
   
   return servoIndex;
 }
@@ -153,7 +153,7 @@ void RP2040_ISR_Servo::write(const uint8_t& servoIndex, uint16_t& value)
   {
     // assumed to be 0-180 degrees servo
     value = constrain(value, 0, 180);
-    value = map(value, 0, 180, _minUs, _maxUs);
+    value = map(value, 0, 180, servo[servoIndex].minPulseUs, servo[servoIndex].maxPulseUs);
   }
   
   writeMicroseconds(servoIndex, value);
@@ -163,7 +163,7 @@ void RP2040_ISR_Servo::write(const uint8_t& servoIndex, uint16_t& value)
 
 void RP2040_ISR_Servo::writeMicroseconds(const uint8_t& servoIndex, uint16_t value) 
 {
-  value = constrain(value, _minUs, _maxUs);
+  value = constrain(value, servo[servoIndex].minPulseUs, servo[servoIndex].maxPulseUs);
   servo[servoIndex].position = value;
 
   if (servo[servoIndex].enabled) 
@@ -203,7 +203,7 @@ bool RP2040_ISR_Servo::setPosition(const uint8_t& servoIndex, uint16_t position)
     {
       // assumed to be 0-180 degrees servo
       position = constrain(position, 0, 180);
-      position = map(position, 0, 180, _minUs, _maxUs);
+      position = map(position, 0, 180, servo[servoIndex].minPulseUs, servo[servoIndex].maxPulseUs);
     }
     
     servo[servoIndex].position = position;
@@ -253,10 +253,10 @@ bool RP2040_ISR_Servo::setPulseWidth(const uint8_t& servoIndex, uint16_t& pulseW
   // Updates interval of existing specified servo
   if ( servo[servoIndex].enabled && (servo[servoIndex].pin <= RP2040_MAX_PIN) )
   {
-    if (pulseWidth < _minUs)
-      pulseWidth = _minUs;
-    else if (pulseWidth > _maxUs)
-      pulseWidth = _maxUs;
+    if (pulseWidth < servo[servoIndex].minPulseUs)
+      pulseWidth = servo[servoIndex].minPulseUs;
+    else if (pulseWidth > servo[servoIndex].maxPulseUs)
+      pulseWidth = servo[servoIndex].maxPulseUs;
    
     writeMicroseconds(servoIndex, pulseWidth);
 
@@ -353,7 +353,7 @@ bool RP2040_ISR_Servo::enable(const uint8_t& servoIndex)
     return false;
   }
 
-  if ( servo[servoIndex].position >= _minUs )
+  if ( servo[servoIndex].position >= servo[servoIndex].minPulseUs )
     servo[servoIndex].enabled = true;
 
   return true;
@@ -379,7 +379,7 @@ void RP2040_ISR_Servo::enableAll()
   // Enable all servos with a enabled and count != 0 (has PWM) and good pin
   for (int8_t servoIndex = 0; servoIndex < MAX_SERVOS; servoIndex++)
   {
-    if ( (servo[servoIndex].position >= _minUs) && !servo[servoIndex].enabled 
+    if ( (servo[servoIndex].position >= servo[servoIndex].minPulseUs) && !servo[servoIndex].enabled
       && (servo[servoIndex].pin <= RP2040_MAX_PIN) )
     {
       servo[servoIndex].enabled = true;
