@@ -316,7 +316,7 @@ void loop()
   // waits 5s between test
   delay(5000);
 
-  Serial.println(F("Servos sweeps from 0-180 degress"));
+  Serial.println(F("Servos sweeps from 0-180 degrees"));
   
   for (position = 0; position <= 180; position += 5)
   {
@@ -392,7 +392,7 @@ Servos idx = 2, act. pos. (deg) = 2450, pulseWidth (us) = 2450
 Servos idx = 3, act. pos. (deg) = 2450, pulseWidth (us) = 2450
 Servos idx = 4, act. pos. (deg) = 2450, pulseWidth (us) = 2450
 Servos idx = 5, act. pos. (deg) = 2450, pulseWidth (us) = 2450
-Servos sweeps from 0-180 degress
+Servos sweeps from 0-180 degrees
 Servos @ 0 degree
 Servos idx = 0, act. pos. (deg) = 800, pulseWidth (us) = 800
 Servos idx = 1, act. pos. (deg) = 800, pulseWidth (us) = 800
@@ -436,7 +436,7 @@ Servos idx = 2, act. pos. (deg) = 2450, pulseWidth (us) = 2450
 Servos idx = 3, act. pos. (deg) = 2450, pulseWidth (us) = 2450
 Servos idx = 4, act. pos. (deg) = 2450, pulseWidth (us) = 2450
 Servos idx = 5, act. pos. (deg) = 2450, pulseWidth (us) = 2450
-Servos sweeps from 0-180 degress
+Servos sweeps from 0-180 degrees
 Servos @ 0 degree
 Servos idx = 0, act. pos. (deg) = 800, pulseWidth (us) = 800
 Servos idx = 1, act. pos. (deg) = 800, pulseWidth (us) = 800
