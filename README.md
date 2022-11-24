@@ -6,8 +6,11 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](#Contributing)
 [![GitHub issues](https://img.shields.io/github/issues/khoih-prog/RP2040_ISR_Servo.svg)](http://github.com/khoih-prog/RP2040_ISR_Servo/issues)
 
+
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Donate to my libraries using BuyMeACoffee" style="height: 50px !important;width: 181px !important;" ></a>
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-orange.svg?logo=buy-me-a-coffee&logoColor=FFDD00" style="height: 20px !important;width: 200px !important;" ></a>
+<a href="https://profile-counter.glitch.me/khoih-prog/count.svg" title="Total khoih-prog Visitor count"><img src="https://profile-counter.glitch.me/khoih-prog/count.svg" style="height: 30px;width: 200px;"></a>
+<a href="https://profile-counter.glitch.me/khoih-prog-RP2040_ISR_Servo/count.svg" title="RP2040_ISR_Servo Visitor count"><img src="https://profile-counter.glitch.me/khoih-prog-RP2040_ISR_Servo/count.svg" style="height: 30px;width: 200px;"></a>
 
 ---
 ---
@@ -103,8 +106,8 @@ This library enables you to use `1 Hardware Timer` on an RP2040-based board to c
 ## Prerequisites
 
 1. [`Arduino IDE 1.8.19+` for Arduino](https://github.com/arduino/Arduino). [![GitHub release](https://img.shields.io/github/release/arduino/Arduino.svg)](https://github.com/arduino/Arduino/releases/latest)
-2. [`Arduino mbed_rp2040 core 3.0.1+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino (Use Arduino Board Manager) RP2040-based boards, such as **Arduino Nano RP2040 Connect, RASPBERRY_PI_PICO, etc.**. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
-3. [`Earle Philhower's arduino-pico core v1.13.2+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
+2. [`Arduino mbed_rp2040 core 3.4.1+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino (Use Arduino Board Manager) RP2040-based boards, such as **Arduino Nano RP2040 Connect, RASPBERRY_PI_PICO, etc.**. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
+3. [`Earle Philhower's arduino-pico core v2.6.3+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
 
 ---
 
@@ -140,14 +143,14 @@ The current library implementation, using `xyz-Impl.h` instead of standard `xyz.
 
 You can include this `.hpp` file
 
-```
+```cpp
 // Can be included as many times as necessary, without `Multiple Definitions` Linker Error
 #include "RP2040_ISR_Servo.hpp"     //https://github.com/khoih-prog/RP2040_ISR_Servo
 ```
 
 in many files. But be sure to use the following `.h` file **in just 1 `.h`, `.cpp` or `.ino` file**, which must **not be included in any other file**, to avoid `Multiple Definitions` Linker Error
 
-```
+```cpp
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include "RP2040_ISR_Servo.h"           //https://github.com/khoih-prog/RP2040_ISR_Servo
 ```
@@ -181,7 +184,7 @@ This non-being-blocked important feature is absolutely necessary for mission-cri
 
 How to use:
 
-```
+```cpp
 #if ( defined(ARDUINO_ARCH_RP2040) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || \
       defined(ARDUINO_GENERIC_RP2040) ) && !defined(ARDUINO_ARCH_MBED)
   #if !defined(RP2040_ISR_SERVO_USING_MBED)    
@@ -362,7 +365,7 @@ https://github.com/khoih-prog/RP2040_ISR_Servo/blob/39e160439b9b4e7c5238202379bd
 ### 1. RP2040_MultipleRandomServos on Mbed RaspberryPi Pico
 
 
-```
+```cpp
 Starting RP2040_MultipleRandomServos on Mbed RaspberryPi Pico
 Mbed RP2040_ISR_Servo v1.1.2
 Setup OK Servo index = 0
@@ -406,7 +409,7 @@ Servos idx = 5, act. pos. (deg) = 800, pulseWidth (us) = 800
 
 ### 2. RP2040_MultipleRandomServos on RaspberryPi Pico
 
-```
+```cpp
 Starting RP2040_MultipleRandomServos on RaspberryPi Pico
 RP2040_ISR_Servo v1.1.2
 Setup OK Servo index = 0
@@ -450,7 +453,7 @@ Servos idx = 5, act. pos. (deg) = 800, pulseWidth (us) = 800
 
 ### 3. RP2040_MultipleServos on RaspberryPi Pico
 
-```
+```cpp
 
 Starting RP2040_MultipleServos on RASPBERRY_PI_PICO
 RP2040_ISR_Servo v1.1.2
@@ -511,7 +514,7 @@ Submit issues to: [RP2040_ISR_Servo issues](https://github.com/khoih-prog/RP2040
 6. Add example [multiFileProject](examples/multiFileProject) to demo for multiple-file project
 7. Optimize code by using passing by `reference` instead of by `value
 8. Permit using servos with different pulse ranges simultaneously
-
+9. Add astyle using `allman` style. Restyle the library
 
 ---
 ---
@@ -551,4 +554,4 @@ If you want to contribute to this project:
 
 ## Copyright
 
-Copyright 2021- Khoi Hoang
+Copyright (c) 2021- Khoi Hoang

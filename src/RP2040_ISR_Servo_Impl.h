@@ -3,11 +3,11 @@
   For :
   - MBED RP2040-based boards such as Nano_RP2040_Connect, RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040.
   - RP2040-based boards such as RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040 using arduino_pico core
-  
+
   Written by Khoi Hoang
   Built by Khoi Hoang https://github.com/khoih-prog/RP2040_ISR_Servo
   Licensed under MIT license
-  
+
   Version: 1.1.2
 
   Version Modified By   Date      Comments
@@ -78,19 +78,20 @@ int8_t RP2040_ISR_Servo::findFirstFreeSlot()
 
 /////////////////////////////////////////////////////
 
-int8_t RP2040_ISR_Servo::setupServo(const uint8_t& pin, const uint16_t& minPulseUs, const uint16_t& maxPulseUs, uint16_t value)
+int8_t RP2040_ISR_Servo::setupServo(const uint8_t& pin, const uint16_t& minPulseUs, const uint16_t& maxPulseUs,
+                                    uint16_t value)
 {
   int8_t servoIndex;
 
   if (pin > RP2040_MAX_PIN)
     return -1;
-    
-  pinMode(pin, OUTPUT);    
+
+  pinMode(pin, OUTPUT);
   digitalWrite(pin, LOW);
 
   if (numServos < 0)
     init();
-    
+
   servoIndex = findFirstFreeSlot();
 
   if (servoIndex < 0)
@@ -101,33 +102,33 @@ int8_t RP2040_ISR_Servo::setupServo(const uint8_t& pin, const uint16_t& minPulse
   servo[servoIndex].minPulseUs = minPulseUs;
   servo[servoIndex].position  = 0;
   servo[servoIndex].enabled   = true;
- 
+
   numServos++;
 
 #if defined(ARDUINO_ARCH_MBED)
-  
+
   // Add code here for mbed
   servo[servoIndex].servoImpl = new ServoImpl(digitalPinToPinName(pin));
-  
+
 #else
 
-  if (!_servoPgm.prepare(&servo[servoIndex].pio, &servo[servoIndex].smIdx, &servo[servoIndex].pgmOffset)) 
+  if (!_servoPgm.prepare(&servo[servoIndex].pio, &servo[servoIndex].smIdx, &servo[servoIndex].pgmOffset))
   {
     // ERROR, no free slots
     ISR_SERVO_LOGERROR("Error no free slot");
     return -1;
   }
-  
+
   servo[servoIndex].enabled = true;
-  
+
   servo_program_init(servo[servoIndex].pio, servo[servoIndex].smIdx, servo[servoIndex].pgmOffset, pin);
   pio_sm_set_enabled(servo[servoIndex].pio, servo[servoIndex].smIdx, false);
   pio_sm_put_blocking(servo[servoIndex].pio, servo[servoIndex].smIdx, RP2040::usToPIOCycles(REFRESH_INTERVAL) / 3);
   pio_sm_exec(servo[servoIndex].pio, servo[servoIndex].smIdx, pio_encode_pull(false, false));
   pio_sm_exec(servo[servoIndex].pio, servo[servoIndex].smIdx, pio_encode_out(pio_isr, 32));
-  
+
   write(servoIndex, value);
-  
+
   pio_sm_exec(servo[servoIndex].pio, servo[servoIndex].smIdx, pio_encode_pull(false, false));
   pio_sm_exec(servo[servoIndex].pio, servo[servoIndex].smIdx, pio_encode_mov(pio_x, pio_osr));
   pio_sm_set_enabled(servo[servoIndex].pio, servo[servoIndex].smIdx, true);
@@ -136,11 +137,11 @@ int8_t RP2040_ISR_Servo::setupServo(const uint8_t& pin, const uint16_t& minPulse
 
   write(servoIndex, value);
 
-#endif  
+#endif
 
   ISR_SERVO_LOGDEBUG1("Index =", servoIndex);
   ISR_SERVO_LOGDEBUG3("min =", servo[servoIndex].minPulseUs, ", max =", servo[servoIndex].maxPulseUs);
-  
+
   return servoIndex;
 }
 
@@ -155,35 +156,35 @@ void RP2040_ISR_Servo::write(const uint8_t& servoIndex, uint16_t& value)
     value = constrain(value, 0, 180);
     value = map(value, 0, 180, servo[servoIndex].minPulseUs, servo[servoIndex].maxPulseUs);
   }
-  
+
   writeMicroseconds(servoIndex, value);
 }
 
 /////////////////////////////////////////////////////
 
-void RP2040_ISR_Servo::writeMicroseconds(const uint8_t& servoIndex, uint16_t value) 
+void RP2040_ISR_Servo::writeMicroseconds(const uint8_t& servoIndex, uint16_t value)
 {
   value = constrain(value, servo[servoIndex].minPulseUs, servo[servoIndex].maxPulseUs);
   servo[servoIndex].position = value;
 
-  if (servo[servoIndex].enabled) 
+  if (servo[servoIndex].enabled)
   {
 #if defined(ARDUINO_ARCH_MBED)
-  
+
     value = value - TRIM_DURATION;
-    
-    if (servo[servoIndex].servoImpl->duration == -1) 
+
+    if (servo[servoIndex].servoImpl->duration == -1)
     {
       servo[servoIndex].servoImpl->start(value);
     }
-    
+
     servo[servoIndex].servoImpl->duration = value;
 #else
 
     // Remove any old updates that haven't yet taken effect
-    pio_sm_clear_fifos(servo[servoIndex].pio, servo[servoIndex].smIdx); 
+    pio_sm_clear_fifos(servo[servoIndex].pio, servo[servoIndex].smIdx);
     pio_sm_put_blocking(servo[servoIndex].pio, servo[servoIndex].smIdx, RP2040::usToPIOCycles(value) / 3);
-    
+
 #endif
   }
 }
@@ -197,20 +198,20 @@ bool RP2040_ISR_Servo::setPosition(const uint8_t& servoIndex, uint16_t position)
 
   // Updates interval of existing specified servo
   if ( servo[servoIndex].enabled && (servo[servoIndex].pin <= RP2040_MAX_PIN) )
-  {   
+  {
     // treat any value less than MIN_PULSE_WIDTH as angle in degrees (values equal or larger are handled as microseconds)
-    if (position < MIN_PULSE_WIDTH) 
+    if (position < MIN_PULSE_WIDTH)
     {
       // assumed to be 0-180 degrees servo
       position = constrain(position, 0, 180);
       position = map(position, 0, 180, servo[servoIndex].minPulseUs, servo[servoIndex].maxPulseUs);
     }
-    
+
     servo[servoIndex].position = position;
-    
+
     writeMicroseconds(servoIndex, position);
 
-    ISR_SERVO_LOGDEBUG3("Idx =", servoIndex, ", pos =",servo[servoIndex].position);
+    ISR_SERVO_LOGDEBUG3("Idx =", servoIndex, ", pos =", servo[servoIndex].position);
 
     return true;
   }
@@ -230,7 +231,7 @@ int RP2040_ISR_Servo::getPosition(const uint8_t& servoIndex)
   // Updates interval of existing specified servo
   if ( servo[servoIndex].enabled && (servo[servoIndex].pin <= RP2040_MAX_PIN) )
   {
-    ISR_SERVO_LOGDEBUG3("Idx =", servoIndex, ", pos =",servo[servoIndex].position);
+    ISR_SERVO_LOGDEBUG3("Idx =", servoIndex, ", pos =", servo[servoIndex].position);
 
     return (servo[servoIndex].position);
   }
@@ -257,10 +258,10 @@ bool RP2040_ISR_Servo::setPulseWidth(const uint8_t& servoIndex, uint16_t& pulseW
       pulseWidth = servo[servoIndex].minPulseUs;
     else if (pulseWidth > servo[servoIndex].maxPulseUs)
       pulseWidth = servo[servoIndex].maxPulseUs;
-   
+
     writeMicroseconds(servoIndex, pulseWidth);
 
-    ISR_SERVO_LOGDEBUG3("Idx =", servoIndex, ", pos =",servo[servoIndex].position);
+    ISR_SERVO_LOGDEBUG3("Idx =", servoIndex, ", pos =", servo[servoIndex].position);
 
 
     return true;
@@ -281,7 +282,7 @@ uint16_t RP2040_ISR_Servo::getPulseWidth(const uint8_t& servoIndex)
   // Updates interval of existing specified servo
   if ( servo[servoIndex].enabled && (servo[servoIndex].pin <= RP2040_MAX_PIN) )
   {
-    ISR_SERVO_LOGDEBUG3("Idx =", servoIndex, ", pos =",servo[servoIndex].position);
+    ISR_SERVO_LOGDEBUG3("Idx =", servoIndex, ", pos =", servo[servoIndex].position);
 
     return (servo[servoIndex].position);
   }
@@ -302,19 +303,21 @@ void RP2040_ISR_Servo::deleteServo(const uint8_t& servoIndex)
   // don't decrease the number of servos if the specified slot is already empty
   if (servo[servoIndex].enabled)
   {
-#if defined(ARDUINO_ARCH_MBED)  
+#if defined(ARDUINO_ARCH_MBED)
+
     //Must be before memset
     if (servo[servoIndex].servoImpl)
       delete servo[servoIndex].servoImpl;
+
 #endif
-      
+
     memset((void*) &servo[servoIndex], 0, sizeof (servo_t));
 
     servo[servoIndex].enabled   = false;
     servo[servoIndex].position  = 0;
     // Intentional bad pin, good only from 0-16 for Digital, A0=17
     servo[servoIndex].pin       = RP2040_WRONG_PIN;
-    
+
     // update number of servos
     numServos--;
   }
@@ -380,7 +383,7 @@ void RP2040_ISR_Servo::enableAll()
   for (int8_t servoIndex = 0; servoIndex < MAX_SERVOS; servoIndex++)
   {
     if ( (servo[servoIndex].position >= servo[servoIndex].minPulseUs) && !servo[servoIndex].enabled
-      && (servo[servoIndex].pin <= RP2040_MAX_PIN) )
+         && (servo[servoIndex].pin <= RP2040_MAX_PIN) )
     {
       servo[servoIndex].enabled = true;
     }
